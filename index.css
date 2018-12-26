@@ -1,0 +1,106 @@
+body {
+  margin: 0;
+  font-family: monospace;
+}
+
+button {
+  position: relative;
+  background-color: #07EFE8;
+  border: none;
+  border-radius: 5px;
+  height: 3rem;
+  width: max-content;
+  color: whitesmoke;
+  font-size: 18px;
+  justify-self: center;
+
+}
+
+button:hover {
+  background-color: whitesmoke;
+  border: #e04b52 solid 1px;
+  color: #e04b52;
+}
+
+
+
+#parkme-header {
+  display: block;
+  justify-content: left;
+  background: black;
+  opacity: .8;
+  height: 7rem;
+  padding: 1rem;
+}
+
+#parkme-header img {
+  height: 6rem;
+  width: 150px;
+}
+
+#parkme-header button {
+  margin: auto;
+  color: blue;
+}
+
+#listings-collection {
+  margin: 2rem;
+}
+
+.card {
+  text-align: center;
+  border: grey solid 1px;
+  padding: 1rem;
+  width: 20rem;
+  height: 20rem;
+  display: inline-grid;
+  margin: center;
+  box-shadow: 3px 4px #07EFE8
+}
+
+.listing-image {
+  justify-self: center;
+  height: 12rem;
+  width: auto;
+}
+
+.container {
+  padding: 1rem;
+  width: stretch;
+  height: auto;
+  display: none;
+  background: #ACC1C0;
+  opacity: .8;
+}
+
+.new-listing-form {
+  width: 80%
+}
+
+.submit {
+  position: relative;
+  background-color: #051211;
+  border-radius: 5px;
+  height: 2rem;
+  width: max-content;
+  color: whitesmoke;
+  font-size: 18px;
+  justify-self: center;
+  font-family: monospace;
+  margin: 3px;
+}
+
+.submit:hover {
+  background-color: whitesmoke;
+  border: #051211 solid 1px;
+  color: #051211;
+}
+
+.input-text {
+  border-radius: 5px;
+  height: 2rem;
+  width: auto;
+  font-size: 14px;
+  font-family: sans-serif;
+  margin: 3px;
+}
