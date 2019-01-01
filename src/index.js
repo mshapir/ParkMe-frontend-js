@@ -6,8 +6,37 @@ newListingForm.addEventListener('submit', createListing)
 const listingCollection = document.getElementById('listings-collection')
 listingCollection.addEventListener('click', renderShow)
 const homeBtn = document.getElementById('home')
+const loginForm = document.getElementById('login-form')
+const loginBtn = document.getElementById('login')
+let userId = null
 
+document.addEventListener('DOMContentLoaded', () => {
+  if (!userId) {
+    homeBtn.style.display = 'none'
+    addBtn.style.display = 'none'
+  }
+})
 
+loginBtn.addEventListener('click', () => {
+  event.preventDefault()
+  const username = document.getElementById('username').value
+  const name = document.getElementById('name').value
+  fetch(`http://localhost:3000/api/v1/users/${username}`)
+  .then(r => r.json())
+  .then(data => {
+    if (data) {
+      userId = data.id
+      loginForm.style.display = 'none'
+      homeBtn.style.display = ''
+      addBtn.style.display = ''
+      fetch('http://localhost:3000/api/v1/listings/')
+      .then(r => r.json())
+      .then(renderListings)
+    } else {
+      alert('create account')
+    }
+  })
+})
 
 homeBtn.addEventListener('click', () => {
   listingCollection.innerHTML = ''
@@ -29,8 +58,6 @@ function renderShow(event) {
 function renderOneListing(data) {
   listingCollection.innerHTML = ''
   listings(data)
-
-
 }
 
 
@@ -76,8 +103,10 @@ fetch('http://localhost:3000/api/v1/listings/')
 
 
 function renderListings(data) {
-  data.forEach(listings)
-
+  if (userId)
+    data.forEach(listings)
+  else
+    console.log('not logged in')
 }
 
 function listings(listing) {
