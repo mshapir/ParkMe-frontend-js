@@ -3,13 +3,34 @@ let addListing = false
 const listingForm = document.querySelector('.container')
 const newListingForm = document.querySelector('.new-listing-form')
 newListingForm.addEventListener('submit', createListing)
-const listing = document.getElementById('listings-collection')
-listing.addEventListener('click', renderShow)
+const listingCollection = document.getElementById('listings-collection')
+listingCollection.addEventListener('click', renderShow)
+const homeBtn = document.getElementById('home')
+
+
+
+homeBtn.addEventListener('click', () => {
+  listingCollection.innerHTML = ''
+  fetch('http://localhost:3000/api/v1/listings/')
+  .then(r => r.json())
+  .then(renderListings)
+})
 
 function renderShow(event) {
   if (event.target.tagName === 'H4' || event.target.tagName === 'IMG') {
-    console.log(event);
+    let listingId = event.target.parentNode.dataset.id
+    console.log(listingId);
+    fetch(`http://localhost:3000/api/v1/listings/${listingId}`)
+    .then(r => r.json())
+    .then(renderOneListing)
   }
+}
+
+function renderOneListing(data) {
+  listingCollection.innerHTML = ''
+  listings(data)
+
+
 }
 
 
@@ -53,7 +74,6 @@ fetch('http://localhost:3000/api/v1/listings/')
 .then(r => r.json())
 .then(renderListings)
 
-const listingCollection = document.getElementById('listings-collection')
 
 function renderListings(data) {
   data.forEach(listings)

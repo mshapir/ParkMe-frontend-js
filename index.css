@@ -104,3 +104,7 @@ button:hover {
   font-family: sans-serif;
   margin: 3px;
 }
+
+h4 {
+  text-decoration: underline;
+}
