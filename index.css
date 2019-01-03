@@ -77,6 +77,19 @@ button:hover {
   width: 80%
 }
 
+.edit-container {
+  padding: 1rem;
+  width: stretch;
+  height: auto;
+  display: none;
+  background: #ACC1C0;
+  opacity: .8;
+}
+
+#price-span {
+  font-style: bold;
+}
+
 .submit {
   position: relative;
   background-color: #051211;
