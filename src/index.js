@@ -80,6 +80,9 @@ function renderOneListing(data) {
   const deleteBtn = document.createElement('button')
   deleteBtn.innerText = 'Delete Listing'
   deleteBtn.setAttribute('id', 'delete-listing')
+  const bookBtn = document.createElement('button')
+  bookBtn.innerText = 'Book this spot!'
+  bookBtn.setAttribute('id', 'book')
   img.setAttribute('class', 'listing-image')
   div.appendChild(span)
   div.appendChild(h4)
@@ -88,9 +91,45 @@ function renderOneListing(data) {
   div.appendChild(p)
   div.appendChild(editBtn)
   div.appendChild(deleteBtn)
+  div.appendChild(bookBtn)
   listingCollection.appendChild(div)
   const edit = document.getElementById('edit-listing')
   edit.addEventListener('click', editListing)
+  const remove = document.getElementById('delete-listing')
+  remove.addEventListener('click', deleteListing)
+  const book = document.getElementById('book')
+  book.addEventListener('click', bookSpot)
+
+}
+
+function bookSpot(event) {
+  let listingId = event.target.parentNode.dataset.id
+  fetch('http://localhost:3000/api/v1/reservations/', {
+    method:'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      listing_id: listingId,
+      user_id: userId
+    })
+  })
+  .then(r => r.json())
+  .then(reservedSpot)
+}
+
+function reservedSpot(data) {
+  listingCollection.innerHTML = ''
+  alert(`Congradulations! You Booked a Parking Spot!`)
+}
+
+function deleteListing(event) {
+  let listingId = event.target.parentNode.dataset.id
+  fetch(`http://localhost:3000/api/v1/listings/${listingId}`, {
+    method: 'DELETE'
+  })
+  .then(r => r.json())
+  .then(event.target.parentNode.remove())
 }
 
 function editListing(event) {
@@ -144,7 +183,7 @@ function editFetch(event) {
   .then(data => {
     let div = document.querySelector(`[data-id='${listingId}']`)
     div.children[1].innerText = data.title
-    div.children[3].innerText = data.image
+    div.children[3].src = data.image_url
     div.children[4].innerText = `Description: ${data.description}`
     div.children[0].innerText = data.location
     div.children[2].innerText = data.price
@@ -204,7 +243,7 @@ function listings(listing) {
   div.setAttribute('class', 'card')
   div.dataset.id = listing.id
   const h4 = document.createElement('h4')
-  h4.innerText = `${listing.title} - $ ${listing.price}`
+  h4.innerText = `${listing.title} - $${listing.price}`
   const img = document.createElement('img')
   img.src = listing.image_url
   const span = document.createElement('span')
